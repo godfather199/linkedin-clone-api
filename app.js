@@ -32,7 +32,8 @@ app.use(cookieSession({
     maxAge: 24 * 60 * 60 * 1000
 }))
 app.use(cors({
-    origin: 'http://localhost:5173',
+    // origin: 'http://localhost:5173',
+    origin: 'https://linkedin-clone-client.onrender.com',
     credentials: true
 }))
 
