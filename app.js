@@ -71,3 +71,10 @@ app.use((err, req, res, next) => {
 
 
 export default app
+
+
+
+// Changes for prod
+//  - Change cors 'origin' in app.js
+//  - Change cors in socket.js
+//  - Change cookie seeting in loginUser in userController.js

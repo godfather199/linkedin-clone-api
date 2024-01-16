@@ -66,7 +66,8 @@ export const loginUser = async (req, res, next) => {
         )
 
         const {password: userPassword, ...userDetails} = user._doc
-
+        
+        
         res
         .status(201)
         .cookie('access_token', token, {
@@ -409,4 +410,21 @@ export const user_Details_By_Id = async (req, res, next) => {
   } catch (error) {
     next(error)
   }
+}
+
+
+
+export const fetch_All_Users = async (req, res, next) => {
+  const {id: logged_In_User_Id} = req.user
+
+  const all_Users = await User.find({
+    _id: {
+      $ne: logged_In_User_Id
+    }
+  })
+
+  res.status(201).json({
+    msg: 'All users fetched',
+    all_Users
+  })
 }
