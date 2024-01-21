@@ -1,7 +1,7 @@
 import Post from '../models/post.model.js'
 import User from '../models/user.model.js'
 import { v2 as cloudinary } from "cloudinary";
-
+import {Schema, model} from 'mongoose'
 
 
 // Create Post
@@ -301,6 +301,43 @@ export const fetch_Post_By_Id = async (req, res, next) => {
             msg: 'Post fetched',
             post
         })
+    } catch (error) {
+        next(error)
+    }
+}
+
+
+
+export const new_User_Show_Posts = async (req, res, next) => {
+    try {
+        const postId = [
+            "65446aafd86ac6fc9284359d",
+            "654a9fcbc462b2f65e645f84",
+            "654cc54908f33d9c5f7dd2bc",
+            "654cc7b6ec4f775223841f84",
+            "654cc82a259c096ecd3d55ff",
+            "6557949d3d25bb622c727e66"
+        ];
+        
+        const posts = await Promise.all(
+          postId.map(
+            async (id) =>
+              await Post.findById(id)
+                .populate("postedBy")
+                .populate({
+                  path: "comments",
+                  populate: {
+                    path: "user",
+                  },
+                })
+          )
+        );
+
+        res.status(201).json({
+            msg: "Posts's fetched for newly registered user",
+            posts
+        })
+
     } catch (error) {
         next(error)
     }
